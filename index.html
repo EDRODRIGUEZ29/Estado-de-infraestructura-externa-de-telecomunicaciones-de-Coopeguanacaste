@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Infraestructura Telecomunicaciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="loginContainer" class="login-container">
+        <div class="login-box">
+            <h1>🌐 Dashboard Infraestructura</h1>
+            <p>Coopeguanacaste Telecomunicaciones</p>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Usuario" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <button type="submit">Ingresar</button>
+                <p id="loginError" class="error"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboardContainer" class="dashboard-container" style="display: none;">
+        <header class="header">
+            <h1>📊 Dashboard - Estado de Infraestructura</h1>
+            <div class="header-actions">
+                <button id="configBtn" class="btn-config">⚙️ Configuración</button>
+                <button id="logoutBtn" class="btn-logout">🚪 Salir</button>
+            </div>
+        </header>
+
+        <!-- Modal de Configuración -->
+        <div id="configModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Configuración de API</h2>
+                <form id="configForm">
+                    <div class="form-group">
+                        <label>URL de la API:</label>
+                        <input type="url" id="apiUrl" placeholder="https://..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Token de Autenticación:</label>
+                        <textarea id="apiToken" placeholder="Tu JWT token" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Intervalo de actualización (segundos):</label>
+                        <input type="number" id="refreshInterval" value="300" min="10">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="testBtn" class="btn-test">🧪 Probar Conexión</button>
+                        <button type="button" id="loadBtn" class="btn-load">📥 Cargar Datos Ahora</button>
+                        <button type="submit" class="btn-save">💾 Guardar Configuración</button>
+                    </div>
+                    <p id="configMessage" class="message"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>📍 Clientes Totales</h3>
+                <p id="totalClientes" class="stat-value">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>📦 Cajas Totales</h3>
+                <p id="totalCajas" class="stat-value">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>🌐 NAPs Activos</h3>
+                <p id="totalNaps" class="stat-value">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>📊 Ocupación Promedio</h3>
+                <p id="avgOcupacion" class="stat-value">0%</p>
+            </div>
+        </div>
+
+        <!-- Mapas -->
+        <div class="maps-container">
+            <div class="map-box">
+                <h2>Ubicación de Clientes</h2>
+                <div id="mapClientes" class="map"></div>
+            </div>
+            <div class="map-box">
+                <h2>Ubicación de Cajas (por Ocupación)</h2>
+                <div id="mapCajas" class="map"></div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <h2>Top 10 - Ocupación de Cajas</h2>
+                <canvas id="chartOcupacion"></canvas>
+            </div>
+            <div class="chart-box">
+                <h2>Puertos Libres Disponibles</h2>
+                <canvas id="chartPuertos"></canvas>
+            </div>
+            <div class="chart-box">
+                <h2>Estado de NAPs</h2>
+                <canvas id="chartNaps"></canvas>
+            </div>
+            <div class="chart-box">
+                <h2>Distribución de Ocupación</h2>
+                <canvas id="chartDistribucion"></canvas>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Última actualización: <span id="lastUpdate">--:--</span></p>
+            <p>Auto-actualización cada <span id="refreshDisplay">300</span> segundos</p>
+        </footer>
+    </div>
+
+    <!-- Librerías -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- Scripts del Dashboard -->
+    <script src="js/auth.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/maps.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
